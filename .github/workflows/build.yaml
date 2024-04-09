@@ -32,5 +32,5 @@ jobs:
         GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }} 
       run:
         gcloud auth sveltekit-deployment asia-south1-docker.pkg.dev
-        docker build -t asia-south1-docker.pkg.dev/artful-logic-419310/sveltekit-deployment/node:21-alpine3.18 .
-        docker push
+        docker build -t asia-south1-docker.pkg.dev/$GOOGLE_PROJECT/sveltekit-deployment/node:21-alpine3.18 .
+        docker push asia-south1-docker.pkg.dev/$GOOGLE_PROJECT/sveltekit-deployment/node:21-alpine3.18
