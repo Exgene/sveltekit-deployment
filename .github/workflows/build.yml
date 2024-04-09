@@ -1,0 +1,55 @@
+name: Deploy SvelteKit application
+
+on:
+  push:
+    branches:
+      - 'master'
+
+env:
+  PROJECT_ID: ${{ secrets.CLOUD_RUN_PROJECT_NAME }}
+  REGION: asia-south1
+  REPO_NAME: sveltekit-deployment
+
+jobs:
+  build-and-deploy:
+    name: Set up and build nodeJS application
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repo
+
+      - name: code checkout
+        uses: actions/checkout@v4
+
+      # Actions need gcloud cli to work so we install it,
+      # Using plugins to avoid writing install bash scripts
+
+      - name: install the gcloud cli
+        id: "auth"
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      
+      # Set up CLI/SDK for cloud 
+      - name: Setup Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+      
+      - name: Authorize Docker Pushing
+        run: gcloud auth configure-docker 
+      
+      - name: Build and Tag the Docker Image
+        run: |-
+          docker build . --tag gcr.io/$PROJECT_ID/$REPO_NAME:$GITHUB_SHA
+
+      # Pushing the docker image
+
+      - name: Push Docker Image to GCR
+        run: |-
+          docker push gcr.io/$PROJECT_ID/$REPO_NAME:$GITHUB_SHA
+      
+      - name: Deploy
+        run: |-
+          gcloud run deploy $REPO_NAME \
+          --region $REGION \
+          --image gcr.io/$PROJECT_ID/$REPO_NAME:$GITHUB_SHA \
+          --platform "managed" \
+          --quiet

@@ -1,14 +1,16 @@
-FROM node:21-alpine3.18 as build
+FROM node:21-alpine as build
 
 WORKDIR /app
 
 COPY . .
 
+RUN npm i -g pnpm
+
 RUN pnpm i
 
 RUN pnpm run build
 
-FROM node:21-alpine3.18 
+FROM node:21-alpine 
 
 WORKDIR /app
 
