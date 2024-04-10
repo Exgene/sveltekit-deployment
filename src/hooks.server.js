@@ -1,3 +1,4 @@
+// TEST
 import process from 'process';
 
 process.on('SIGINT', () => {
