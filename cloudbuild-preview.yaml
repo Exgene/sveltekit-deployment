@@ -57,7 +57,7 @@ steps:
       ]
 
 substitutions:
-  _SERVICE_NAME: ${_SERVICE_NAME}
+  _SERVICE_NAME: sveltekit-deploy
   _REGION: asia-south1
 
 options:
