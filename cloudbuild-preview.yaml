@@ -57,8 +57,8 @@ steps:
       ]
 
 substitutions:
-  _SERVICE_NAME: myservice
-  _REGION: us-central1
+  _SERVICE_NAME: ${_SERVICE_NAME}
+  _REGION: asia-south1
 
 options:
   dynamicSubstitutions: true
