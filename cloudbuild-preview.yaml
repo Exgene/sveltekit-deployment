@@ -5,7 +5,7 @@ steps:
       [
         "build",
         "-t",
-        "asia-south1-docker.pkg.dev/$PROJECT_ID/containers/${_SERVICE_NAME}:${_PR_NUMBER}-${SHORT_SHA}",
+        "asia-south1-docker.pkg.dev/$PROJECT_ID/${_SERVICE_NAME}:${_PR_NUMBER}-${SHORT_SHA}",
         ".",
       ]
 
@@ -14,7 +14,7 @@ steps:
     args:
       [
         "push",
-        "asia-south1-docker.pkg.dev/$PROJECT_ID/containers/${_SERVICE_NAME}:${_PR_NUMBER}-${SHORT_SHA}",
+        "asia-south1-docker.pkg.dev/$PROJECT_ID/${_SERVICE_NAME}:${_PR_NUMBER}-${SHORT_SHA}",
       ]
 
   - id: "deploy revision with tag"
@@ -30,14 +30,14 @@ steps:
         "--region",
         "${_REGION}",
         "--image",
-        "us-central1-docker.pkg.dev/$PROJECT_ID/containers/${_SERVICE_NAME}:${_PR_NUMBER}-${SHORT_SHA}",
+        "us-central1-docker.pkg.dev/$PROJECT_ID/${_SERVICE_NAME}:${_PR_NUMBER}-${SHORT_SHA}",
         "--tag",
         "pr-${_PR_NUMBER}",
         "--no-traffic",
       ]
 
   - id: "link revision on pull request"
-    name: "us-central1-docker.pkg.dev/$PROJECT_ID/containers/deployment-previews" # our custom builder
+    name: "asia-south1-docker.pkg.dev/$PROJECT_ID/deployment-previews" # our custom builder
     secretEnv: ["GITHUB_TOKEN"]
     args:
       [
