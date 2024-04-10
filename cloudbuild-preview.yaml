@@ -19,6 +19,8 @@ steps:
         'managed',
         '--region',
         '${_REGION}',
+        '--service-account',
+        'sveltekit-deployment@${PROJECT_ID}.iam.gserviceaccount.com',
         '--image',
         'gcr.io/$PROJECT_ID/${_SERVICE_NAME}:${_PR_NUMBER}-${SHORT_SHA}',
         '--tag',
