@@ -1,5 +1,5 @@
 import process from 'process';
-
+// 
 process.on('SIGINT', () => {
 	process.exit();
 });
