@@ -1,7 +1,7 @@
 # Define substitutions at the beginning
 substitutions:
   _SERVICE_NAME: sveltekit-deploy  # Replace with your actual service name
-  _REGION: asia-south1           # Replace with your desired region
+  _REGION: asia-south1           # Replace with your desired region 
 
 # Define variables used throughout the build
 steps:
@@ -14,7 +14,6 @@ steps:
   - '--dockerfile=Dockerfile'
   - '--destination=gcr.io/$PROJECT_ID/$${_SERVICE_NAME}:${_PR_NUMBER}-${SHORT_SHA}'
   - '.'
-  serviceAccount: 'sveltekit-deployment@artful-logic-419310.iam.gserviceaccount.com'
 
 - name: 'Push image'
   id: 'push-image'
